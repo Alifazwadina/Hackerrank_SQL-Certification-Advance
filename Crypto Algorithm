@@ -1,0 +1,18 @@
+SELECT
+c.algorithm,
+SUM(CASE WHEN QUARTER(t.dt) = 1 THEN t.volume ELSE 0 END) AS trannsactions_Q1,
+SUM(CASE WHEN QUARTER(t.dt) = 2 THEN t.volume ELSE 0 END) AS trannsactions_Q2,
+SUM(CASE WHEN QUARTER(t.dt) = 3 THEN t.volume ELSE 0 END) AS trannsactions_Q3,
+SUM(CASE WHEN QUARTER(t.dt) = 4 THEN t.volume ELSE 0 END) AS trannsactions_Q4
+FROM
+coins c
+JOIN
+transactions t
+ON
+c.code = t.coin_code
+WHERE
+EXTRACT(YEAR FROM t.dt) = 2020
+GROUP BY
+c.algorithm
+ORDER BY
+c.algorithm;
